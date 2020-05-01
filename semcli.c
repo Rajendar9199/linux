@@ -2,9 +2,6 @@
 #include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/sem.h>
-
-//Copy wrapper functions of semsrv.c file here.
-
 int mysem_post(int semid)
 {
 	struct sembuf sb;
