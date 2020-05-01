@@ -15,7 +15,7 @@ int main()
 	int semId, shmId;
 	char *pShm;
 	struct sembuf smop;
-	semId = semget(MY_KEY, 2, 0660)	
+	semId = semget(MY_KEY, 2, 0660)	//get semaphore id
 	
 	if(semId < 0)
 	{
@@ -32,7 +32,7 @@ int main()
 		return (2);	
 	}
 	
-	pShm = shmat(shmId, NULL, 0);
+	pShm = shmat(shmId, NULL, 0);   //attach shared memory to semid
 	if(!pShm)
 	{
 		printf("COuld not attach shared memory segment\n");
@@ -45,13 +45,11 @@ while(1)
 	smop.sem_num = 0;
 	smop.sem_op = 1;
 	smop.sem_flg = 0;
-	//smop.sem_flg = SEM_UNDO;
 	semop(semId, &smop, 1);
 	
 	smop.sem_num = 1;
 	smop.sem_op = -1;
 	smop.sem_flg = 0;
-	//smop.sem_flg = SEM_UNDO;
 	semop(semId, &smop, 1);
 	puts(pShm+RESP_MSG_START);
 }
